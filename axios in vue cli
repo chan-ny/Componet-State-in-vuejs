@@ -1,0 +1,29 @@
+# this one to use axios for fecth data from back-end
+
+ 1. install axios
+    $ yarn add axios
+    
+ 2. create service get api
+    -> create file js name api.js
+    
+      -> import axios from "axios";
+       export default () => {
+          return axios.create({
+             baseURL: "http://127.0.0.1:8000/api/",
+          });
+       };  
+   
+  3. using token state
+     -> import axios from "axios";
+     -> import store from "@/store/index";
+
+      export default () => {
+        return axios.create({
+          baseURL: "http://127.0.0.1:8000/api/",
+          headers: {
+            Authorization: `Bearer ${store.state.token}`
+         }
+      });
+    };
+
+    
