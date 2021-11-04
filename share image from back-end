@@ -1,0 +1,5 @@
+<v-img
+class="mx-auto"
+max-width="103px"
+:src="'http://127.0.0.1:8000/storage/images/clothing/' +item.pdphotos_main"
+></v-img>
