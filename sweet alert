@@ -1,0 +1,38 @@
+# using sweetalert2 in vue
+  $ yarn add sweetalert2
+
+
+1. import Swal from "sweetalert2";
+
+2. create function 
+
+  function showMessage(even,text,timeout) {
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: timeout,
+        timerProgressBar: true,
+        didOpen: toast => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        }
+      });
+
+      Toast.fire({
+        icon: even,
+        title: '<div style=" font-weight: normal;">'+text+'</div>'
+      });
+    }
+
+   export default{
+       showMessage
+    }
+    
+3. to use in componet other
+    1. import Notify from "@/notify/notifycation";
+    2. use to function and etc
+       Notify.showMessage("state", "message", 4000);
+       
+       state have => success, error, warring, info
