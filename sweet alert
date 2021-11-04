@@ -2,6 +2,8 @@
   $ yarn add sweetalert2
 
 
+# creat file javascript name notifycation
+
 1. import Swal from "sweetalert2";
 
 2. create function 
