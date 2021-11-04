@@ -1,0 +1,46 @@
+# you need install dependencies before
+  1 $ yarn add vuex
+  2 $ yarn add vuex-persistedstate
+  
+  # bring vuex-persistedstate in the store index
+    1 import import createPersistedState from "vuex-persistedstate";
+    2 using export default
+       export default new Vuex.Store({
+            plugins: [createPersistedState()],
+            state:{
+              /* varlable */
+              product_Id: 0,
+              notifycation: [],
+            },
+            mutations:{
+              /* constructure method */
+                  productchange(state, product_Id) {
+                     state.product_Id = product_Id;
+                   },
+                   isnotifycation(state, notifycation) {
+                      state.notifycation = notifycation;
+                    },
+            },
+            getters:{
+              /*parameters commit */
+              product_Id: state => state.product_Id,
+            },
+            actions:{
+             /*parameters commit */
+                  EventNotifycation({ commit }, notifycation) {
+                      commit("isnotifycation", notifycation);
+                   },
+            }
+        })
+        
+   # using in the componet other
+      1. how to actions => this.$store.dispatch("EventNotifycation", "parameters");
+      2. how to getters = >  this.$store.commit("productchange", "parameters");
+      
+   # using ...mapState for fecth value into varliable state
+       1 import { mapState } from "vuex";
+       2 create computed
+            computed: {
+             ...mapState(["varliable in state"])
+            },
+   
