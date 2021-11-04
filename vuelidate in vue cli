@@ -1,0 +1,98 @@
+# this one install 
+   yarn add vuelidate
+   
+# using in the componet
+   <script>
+   import { validationMixin } from "vuelidate";
+   import { required, maxLength, minLength } from "vuelidate/lib/validators";
+   
+   export default {
+     mixins: [validationMixin],
+    validations: {
+      sizeName: { required, minLength: minLength(1), maxLength: maxLength(15) },
+      sizeDetail: { required, minLength: minLength(6) },
+      sizeState: { required, minLength: minLength(2), maxLength: maxLength(8) }
+     },
+   data() {
+    return {
+      sizeName: "",
+      sizeDetail: "",
+      sizeState: "",
+     };
+    },
+  computed: {
+   sizesNameError() {
+      const error = [];
+      if (!this.$v.sizeName.$dirty) return error;
+      !this.$v.sizeName.minLength &&
+        error.push("ຂໍ້ມູນຂອງຂະໜາດສີນຄ້າຕ້ອງຫຼາຍກວ່າ 1 ຕົວອັກສອນ");
+      !this.$v.sizeName.maxLength &&
+        error.push("ຂໍ້ມູນຂອງຂະໜາດສີນຄ້າຕ້ອງໃຫ່ຍສູດບໍ່ເກີນ 15 ຕົວອັກສອນ");
+      !this.$v.sizeName.required && error.push("ເພີ່ມຂໍ້ມູນຊື່ຂະໜາດກ່ອນ");
+      return error;
+    },
+    sizesDetailError() {
+      const error = [];
+      if (!this.$v.sizeDetail.$dirty) return error;
+      !this.$v.sizeDetail.minLength &&
+        error.push("ຂໍ້ມູນຂອງລາຍລະອຽດສີນຄ້າຕ້ອງຫຼາຍກວ່າ 6 ຕົວອັກສອນ");
+      !this.$v.sizeDetail.required && error.push("ເພີ່ມຂໍ້ມູນລາຍລະອຽດກ່ອນ");
+      return error;
+    },
+    sizesStatusError() {
+      const error = [];
+      if (!this.$v.sizeState.$dirty) return error;
+      !this.$v.sizeState.minLength &&
+        error.push("ຂໍ້ມູນຂອງສະຖານະເຮັດວຽກຕ້ອງຫຼາຍກວ່າ 2 ຕົວອັກສອນ");
+      !this.$v.sizeState.maxLength &&
+        error.push("ຂໍ້ມູນຂອງສະຖານະເຮັດວຽກຕ້ອງໃຫ່ຍສູດບໍ່ເກີນ 8 ຕົວອັກສອນ");
+      !this.$v.sizeState.required && error.push("ເພີ່ມຂໍ້ມູນສະຖານະເຮັດວຽກກ່ອນ");
+      return error;
+    }
+  
+  }
+   
+}
+</script>
+
+# using to HtML 
+      <Form model="POST">
+              <div>
+                <v-text-field
+                  v-model="sizeName"
+                  :error-messages="sizesNameError"
+                  :counter="15"
+                  required
+                  label="ຊື່ຂະໜາດສິນຄ້າ"
+                  @input="$v.sizeName.$touch()"
+                  @blur="$v.sizeName.$touch()"
+                ></v-text-field>
+                <v-textarea
+                  v-model="sizeDetail"
+                  :error-messages="sizesDetailError"
+                  required
+                  label="ລາຍລະອຽດ"
+                  @input="$v.sizeDetail.$touch()"
+                  @blur="$v.sizeDetail.$touch()"
+                  outlined
+                ></v-textarea>
+                <v-select
+                  v-model="sizeState"
+                  :items="item"
+                  :error-messages="sizesStatusError"
+                  required
+                  label="ສະຖານະເຮັດວຽກ"
+                  @input="$v.sizeState.$touch()"
+                  @blur="$v.sizeState.$touch()"
+                ></v-select>
+              </div>
+       </Form>
+       
+  # using to function 
+     # create function submit 
+       this.$v.$touch();
+        if (this.$v.$invalid) {
+          console.log("error")
+        } else {
+        console.log("ok")
+        }
