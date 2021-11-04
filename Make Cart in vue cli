@@ -1,0 +1,46 @@
+#  this is addition value
+
+  selectSize(itemAdd) {
+      let items = itemAdd;
+      let itemID = this.addCart.filter(item => item.srId === items.srId);
+      let isitemId = itemID.length > 0;
+      if (isitemId == false) {
+        this.addCart.push(items);
+        items.srqty = 1;
+      } else {
+        items.srqty += 1;
+      }
+      this.$store.dispatch("headerAddCart", this.addCart);
+    }
+ 
+ 
+# this is remove value
+    isOpenRemove(item) {
+      this.dataCart.splice(this.dataCart.indexOf(item), 1);
+      this.$store.dispatch("headerAddCart", this.dataCart);
+    }
+    
+    
+# computed value
+    Total() {
+      let total = 0;
+      this.dataCart.forEach(item => {
+        total += item.pdprice * item.srqty;
+      });
+      return total;
+    },
+    CountNumber() {
+      var num = this.dataCart.reduce(
+        (acc, item) => acc + Number(item.srqty),
+        0
+      );
+      return num;
+    }
+    
+# format integer in HTML
+  {{ new Intl.NumberFormat().format(Total) }} ກີບ 
+
+# format datetime in HTML 
+    <template v-slot:item.created_at="{ item }">
+       <span>{{ new Date(item.created_at).toLocaleString() }}</span>
+    </template>
